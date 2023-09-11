@@ -76,7 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        //title: Text(widget.title),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -98,21 +100,34 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(40),
+              child: Text(
+                "Learn Something New",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
             const Text(
               "Tell us what you want to learn and we'll tell you how to do it with a comprehensive weekly learning plan.",
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: EdgeInsets.all(50),
               child: TextFormField(
                 controller: topicController,
                 decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
+                  border: OutlineInputBorder(),
                   labelText:
-                      'I want to get really good at...(coding interviews, crocheting, data analytics, cooking, etc.)',
+                      'I want to get really good at...coding, crocheting, data analytics, cooking, etc.',
                 ),
               ),
             ),
-            ElevatedButton(
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: ElevatedButton(
                 onPressed: () {
                   LearningPrompt learningPrompt =
                       LearningPrompt(topic: topicController.text);
@@ -121,15 +136,32 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: widget.title, prompt: learningPrompt),
                   ));
                 },
-                child: const Text("Next")),
+                child: const Text("Next"),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        //const Color(0xffd1849e),
+                        Colors.black),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                                //color: Color(0xffd1849e),
+                                color: Colors.white)))),
+              ),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: const Padding(
+        padding: EdgeInsets.all(4),
+        child: Text(
+          "Created by Candice Wright & Powered by OpenAI's GPT-3.5",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

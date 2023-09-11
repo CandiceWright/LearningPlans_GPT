@@ -33,6 +33,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        backgroundColor: Colors.black,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -40,22 +41,37 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "Build a weekly study plan to learn ${widget.prompt.topic} in ${widget.prompt.weeks} weeks, studying ${widget.prompt.hoursPerDay} hours per day.",
+            Padding(
+              padding: EdgeInsets.all(30),
+              child: Text(
+                "Build a weekly study plan to learn ${widget.prompt.topic} in ${widget.prompt.weeks} weeks, studying ${widget.prompt.hoursPerDay} hours per day.",
+                style: TextStyle(fontSize: 20),
+              ),
             ),
             ElevatedButton(
-                onPressed: () async {
-                  String completePrompt =
-                      "Build me a weekly study plan to learn ${widget.prompt.topic} in 16 weeks, studying ${widget.prompt.weeks} weeks, studying ${widget.prompt.hoursPerDay} hours per day. Format your response as a json array and use this json as an example: { 'week': 'Week 1', 'title': 'Introduction to Data Analytics', 'description': 'In this week, you will be introduced to the basics of data analytics, including key concepts, tools, and techniques.', 'topics': [ 'Introduction to data analytics', 'Importance of data analytics', 'Data analytics process', 'Key tools and technologies' ], 'resources': [ { 'title': 'Data Analytics: A Comprehensive Beginner's Guide', 'url': 'https://www.analyticsvidhya.com/blog/2018/05/data-analytics-beginners-guide/' }, { 'title': 'Introduction to Data Analytics - Tutorial', 'url': 'https://www.tutorialspoint.com/data_analytics/data_analytics_introduction.htm'} ] }} ] } ";
-                  List<StudyPlanChapter> weeklyStudyPlan = await ServerService
-                      .sharedInstance
-                      .getLearningPlan(completePrompt);
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ResultsPage(
-                        title: widget.title, studyPlan: weeklyStudyPlan),
-                  ));
-                },
-                child: const Text("Build my learning Plan")),
+              onPressed: () async {
+                String completePrompt =
+                    "Build me a weekly study plan to learn ${widget.prompt.topic} in 16 weeks, studying ${widget.prompt.weeks} weeks, studying ${widget.prompt.hoursPerDay} hours per day. Format your response as a json array and use this json as an example: { 'week': 'Week 1', 'title': 'Introduction to Data Analytics', 'description': 'In this week, you will be introduced to the basics of data analytics, including key concepts, tools, and techniques.', 'topics': [ 'Introduction to data analytics', 'Importance of data analytics', 'Data analytics process', 'Key tools and technologies' ], 'resources': [ { 'title': 'Data Analytics: A Comprehensive Beginner's Guide', 'url': 'https://www.analyticsvidhya.com/blog/2018/05/data-analytics-beginners-guide/' }, { 'title': 'Introduction to Data Analytics - Tutorial', 'url': 'https://www.tutorialspoint.com/data_analytics/data_analytics_introduction.htm'} ] }} ] } ";
+                List<StudyPlanChapter> weeklyStudyPlan = await ServerService
+                    .sharedInstance
+                    .getLearningPlan(completePrompt);
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                      title: widget.title, studyPlan: weeklyStudyPlan),
+                ));
+              },
+              child: const Text("Build my learning Plan"),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      //const Color(0xffd1849e),
+                      Colors.black),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: const BorderSide(
+                              //color: Color(0xffd1849e),
+                              color: Colors.white)))),
+            ),
           ],
         ),
       ),

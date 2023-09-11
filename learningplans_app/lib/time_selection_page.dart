@@ -50,6 +50,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        backgroundColor: Colors.black,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -57,14 +58,17 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              "How many weeks do you want to take to learn this (Be realistic)?",
+            Text(
+              "How many weeks do you want to dedicate to learning ${widget.prompt.topic} (Let's Be Realistic!)?",
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: StatefulBuilder(
                 builder: (context4, setState) {
                   return NumberPicker(
+                    textStyle: const TextStyle(color: Colors.grey),
+                    selectedTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                     value: weeks,
                     minValue: 0,
                     maxValue: 100,
@@ -81,33 +85,53 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
               child: StatefulBuilder(
                 builder: (context4, setState) {
                   return NumberPicker(
+                    textStyle: const TextStyle(color: Colors.grey),
+                    selectedTextStyle: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                     value: hoursPerDay,
                     minValue: 0,
-                    maxValue: 100,
+                    maxValue: 24,
                     onChanged: (value) => setState(() => hoursPerDay = value),
                   );
                 },
               ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  widget.prompt.hoursPerDay = hoursPerDay;
-                  widget.prompt.weeks = weeks;
+              onPressed: () {
+                widget.prompt.hoursPerDay = hoursPerDay;
+                widget.prompt.weeks = weeks;
 
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ConfirmationPage(
-                        title: widget.title, prompt: widget.prompt),
-                  ));
-                },
-                child: const Text("Next")),
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ConfirmationPage(
+                      title: widget.title, prompt: widget.prompt),
+                ));
+              },
+              child: const Text("Next"),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      //const Color(0xffd1849e),
+                      Colors.black),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: const BorderSide(
+                              //color: Color(0xffd1849e),
+                              color: Colors.white)))),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: const Padding(
+        padding: EdgeInsets.all(4),
+        child: Text(
+          "Created by Candice Wright & Powered by OpenAI's GPT-3.5",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
