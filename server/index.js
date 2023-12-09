@@ -33,16 +33,6 @@ function proof(request, response) {
     response.send("Hi I am working. What do you need.");
 }
 
-// app.options('/plan', 
-//     cors({
-//         allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
-//         //exposedHeaders: ["authorization"], // you can change the headers
-//         origin: true,
-//         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//         //preflightContinue: true
-//       }
-// ));
-
 app.post('/plan', generatePlan);
 async function generatePlan(request, response) {
     var data = request.body;
